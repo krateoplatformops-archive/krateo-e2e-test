@@ -38,6 +38,8 @@ jobs:
           spec:
             package: xpkg.upbound.io/crossplane-contrib/provider-kubernetes:v0.6.0
           EOF
+      - name: Check provider-kubernetes Healthy condition
+        run: kubectl wait provider.pkg.crossplane.io provider-kubernetes --for condition=Healthy=True --timeout=90s
       - name: Install provider-helm
         run: |
           cat <<EOF | kubectl apply -f -
@@ -48,8 +50,8 @@ jobs:
           spec:
             package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.13.0
           EOF
-      - name: Check package readiness
-        run: kubectl get pkg
+      - name: Check provider-helm Healthy condition
+        run: kubectl wait provider.pkg.crossplane.io provider-helm --for condition=Healthy=True --timeout=90s
       - name: Install krateo-module-core with dummy domain
         run: |
           cat <<EOF | kubectl apply -f -
@@ -60,3 +62,5 @@ jobs:
           spec:
             package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.13.0
           EOF
+      - name: Check krateo-module-core Ready condition
+        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=90s
