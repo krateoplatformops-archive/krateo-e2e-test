@@ -52,8 +52,6 @@ jobs:
           EOF
       - name: Check provider-helm Healthy condition
         run: kubectl wait provider.pkg.crossplane.io provider-helm --for condition=Healthy=True --timeout=90s
-      - name: Kubectl get pkg
-        run: kubectl get pkg
       - name: Install krateo-module-core configuration
         run: |
           cat <<EOF | kubectl apply -f -
@@ -69,6 +67,8 @@ jobs:
           EOF
       - name: Check krateo-module-core configuration condition
         run: kubectl wait configuration.pkg.crossplane.io krateo-module-core --for condition=Healthy=True --timeout=90s
+      - name: Kubectl get pkg
+        run: kubectl get pkg
       - name: Install krateo-module-core with dummy domain
         run: |
           cat <<EOF | kubectl apply -f -
@@ -94,6 +94,10 @@ jobs:
       - name: Get all pods
         if: always()
         run: kubectl get pods -A
-      - name: Describe krateo-module-cre
+      - name: Describe krateo-module-core
         if: always()
         run: kubectl describe core.modules.krateo.io/core
+      - name: Get managed
+        if: always()
+        run: kubectl get managed
+        
