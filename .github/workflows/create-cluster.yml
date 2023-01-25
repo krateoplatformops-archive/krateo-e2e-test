@@ -1,6 +1,6 @@
 name: Create EKS Cluster with Kind and CAPI
 
-on: workflow_dispatch
+on: push
 
 jobs:
   create-cluster:
