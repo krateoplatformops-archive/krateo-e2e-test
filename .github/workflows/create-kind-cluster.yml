@@ -28,9 +28,13 @@ jobs:
         run: |
           kubectl wait deployment -n krateo-system crossplane --for condition=Available=True --timeout=90s
           kubectl wait deployment -n krateo-system crossplane-rbac-manager --for condition=Available=True --timeout=90s
+      - name: Create serviceaccount for provider-helm
+        run: |
+
+          SA=$(kubectl -n krateo-system get sa -o name | grep provider-kubernetes | sed -e 's|serviceaccount\/|krateo-system:|g')
+          kubectl create clusterrolebinding provider-kubernetes-admin-binding --clusterrole cluster-admin --serviceaccount="${SA}"
       - name: Install provider-kubernetes
         run: |
-          cat <<EOF | kubectl apply -f -
           apiVersion: pkg.crossplane.io/v1
           kind: Provider
           metadata:
@@ -40,6 +44,10 @@ jobs:
           EOF
       - name: Check provider-kubernetes Healthy condition
         run: kubectl wait provider.pkg.crossplane.io provider-kubernetes --for condition=Healthy=True --timeout=90s
+      - name: Create serviceaccount for provider-helm
+        run: |
+          SA=$(kubectl -n krateo-system get sa -o name | grep provider-helm | sed -e 's|serviceaccount\/|krateo-system:|g')
+          kubectl create clusterrolebinding provider-helm-admin-binding --clusterrole cluster-admin --serviceaccount="${SA}"
       - name: Install provider-helm
         run: |
           cat <<EOF | kubectl apply -f -
