@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.4.0
-      - name: Kubectl get nodes
-        run: kubectl get nodes
+      - name: Kubectl describe nodes
+        run: kubectl describe nodes
+      - name: uname -a
+        run: uname -a
