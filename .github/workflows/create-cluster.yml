@@ -1,6 +1,6 @@
 name: Create Cluster
 
-on: pull_request
+on: workflow_dispatch
 
 jobs:
   create-cluster:
