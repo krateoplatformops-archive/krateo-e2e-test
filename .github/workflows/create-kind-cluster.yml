@@ -54,6 +54,7 @@ jobs:
         run: kubectl wait provider.pkg.crossplane.io provider-helm --for condition=Healthy=True --timeout=90s
       - name: Install krateo-module-core configuration
         run: |
+          cat <<EOF | kubectl apply -f -
           apiVersion: pkg.crossplane.io/v1
           kind: Configuration
           metadata:
@@ -63,6 +64,7 @@ jobs:
             packagePullPolicy: IfNotPresent
             revisionActivationPolicy: Automatic
             revisionHistoryLimit: 1
+          EOF
       - name: Check krateo-module-core configuration condition
         run: kubectl wait configuration.pkg.crossplane.io krateo-module-core --for condition=Healthy=True --timeout=90s
       - name: Install krateo-module-core with dummy domain
