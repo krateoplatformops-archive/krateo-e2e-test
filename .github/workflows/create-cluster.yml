@@ -24,3 +24,5 @@ jobs:
         run: sudo mv clusterawsadm /usr/local/bin
       - name: Check version to confirm installation
         run: clusterawsadm version
+      - name: Create a CloudFormation stack in AWS account
+        run: clusterawsadm bootstrap iam create-cloudformation-stack
