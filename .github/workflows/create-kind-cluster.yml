@@ -30,6 +30,7 @@ jobs:
           kubectl wait deployment -n krateo-system crossplane-rbac-manager --for condition=Available=True --timeout=90s
       - name: Install provider-kubernetes
         run: |
+          cat <<EOF | kubectl apply -f -
           apiVersion: pkg.crossplane.io/v1
           kind: Provider
           metadata:
