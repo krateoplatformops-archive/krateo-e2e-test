@@ -10,3 +10,5 @@ jobs:
         uses: helm/kind-action@v1.4.0
       - name: Kubectl describe nodes
         run: kubectl describe nodes
+      - name: Download OC client
+        run: kubectl create namespace crossplane-system

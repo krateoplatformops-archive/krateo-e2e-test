@@ -52,6 +52,19 @@ jobs:
           EOF
       - name: Check provider-helm Healthy condition
         run: kubectl wait provider.pkg.crossplane.io provider-helm --for condition=Healthy=True --timeout=90s
+      - name: Install krateo-module-core configuration
+        run: |
+          apiVersion: pkg.crossplane.io/v1
+          kind: Configuration
+          metadata:
+            name: krateo-module-core
+          spec:
+            package: ghcr.io/krateoplatformops/krateo-module-core:v1.1.1
+            packagePullPolicy: IfNotPresent
+            revisionActivationPolicy: Automatic
+            revisionHistoryLimit: 1
+      - name: Check krateo-module-core configuration condition
+        run: kubectl wait configuration.pkg.crossplane.io krateo-module-core --for condition=Healthy=True --timeout=90s
       - name: Install krateo-module-core with dummy domain
         run: |
           cat <<EOF | kubectl apply -f -
@@ -73,4 +86,4 @@ jobs:
             protocol: https
           EOF
       - name: Check krateo-module-core Ready condition
-        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=90s
+        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=300s
