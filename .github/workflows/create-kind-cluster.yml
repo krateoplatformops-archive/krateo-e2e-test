@@ -55,12 +55,22 @@ jobs:
       - name: Install krateo-module-core with dummy domain
         run: |
           cat <<EOF | kubectl apply -f -
-          apiVersion: pkg.crossplane.io/v1
-          kind: Provider
+          apiVersion: modules.krateo.io/v1
+          kind: Core
           metadata:
-            name: provider-helm
+            name: core
           spec:
-            package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.13.0
+            api:
+              hostname: api
+            app:
+              hostname: app
+            argo-cd:
+              hostname: argocd
+            domain: krateo.temp
+            domainPort: 443
+            namespace: krateo-system
+            platform: kubernetes
+            protocol: https
           EOF
       - name: Check krateo-module-core Ready condition
         run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=90s
