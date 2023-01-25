@@ -15,4 +15,6 @@ jobs:
       - name: Install Krateo CLI for AMD64
         run: sudo apt install ./krateo_1.3.6_linux_amd64.deb
       - name: Move the binary to a directory present in your PATH
+        run: ls -la
+      - name: Move the binary to a directory present in your PATH
         run: sudo mv krateo /usr/local/bin
