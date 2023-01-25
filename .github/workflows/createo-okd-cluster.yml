@@ -1,6 +1,6 @@
-name: Create OKD Cluster 
+name: Create OKD Cluster
 
-on: [push]
+on: workload_dispatch
 
 jobs:
   example:
@@ -12,7 +12,7 @@ jobs:
       - name: Setup OpenShift
         uses: manusa/actions-setup-openshift@v1.1.4
         with:
-          oc version: 'v4.12.0'
+          oc version: '4.12.0-0.okd-2023-01-21-055900'
           github token: ${{ secrets.GITHUB_TOKEN }}
       - name: Interact with the cluster
         run: oc cluster status
