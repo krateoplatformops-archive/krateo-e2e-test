@@ -92,7 +92,7 @@ jobs:
             protocol: https
           EOF
       - name: Check krateo-module-core Ready condition
-        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=300s
+        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=30s
       - name: Get all pods
         if: always()
         run: kubectl get pods -A
@@ -105,3 +105,6 @@ jobs:
       - name: Kubectl get pkg
         if: always()
         run: kubectl get pkg
+      - name: Kubectl get release
+        if: always()
+        run: kubectl get release.helm.crossplane.io/core-release-dashboard-common-chart -o yaml
