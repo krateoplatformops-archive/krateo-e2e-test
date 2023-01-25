@@ -24,3 +24,25 @@ jobs:
           helm repo add crossplane-stable https://charts.crossplane.io/stable
           helm repo update
           helm upgrade crossplane --namespace crossplane-system crossplane-stable/crossplane --install --wait
+      - name: Install provider-kubernetes
+        run: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: pkg.crossplane.io/v1
+          kind: Provider
+          metadata:
+            name: provider-kubernetes
+          spec:
+            package: xpkg.upbound.io/crossplane-contrib/provider-kubernetes:v0.6.0
+          EOF
+      - name: Install provider-helm
+        run: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: pkg.crossplane.io/v1
+          kind: Provider
+          metadata:
+            name: provider-helm
+          spec:
+            package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.13.0
+          EOF
+      - name: Check package readiness
+        run: kubectl get pkg
