@@ -10,5 +10,5 @@ jobs:
         uses: helm/kind-action@v1.4.0
       - name: Kubectl describe nodes
         run: kubectl describe nodes
-      - name: uname -a
-        run: uname -a
+      - name: Download CAPI for AMD64
+        run: curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.3.2/clusterctl-linux-amd64 -o clusterctl
