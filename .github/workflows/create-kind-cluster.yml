@@ -24,6 +24,10 @@ jobs:
           helm repo add crossplane-stable https://charts.crossplane.io/stable
           helm repo update
           helm upgrade crossplane --namespace crossplane-system crossplane-stable/crossplane --install --wait
+      - name: Check Crossplane readiness
+        run: |
+          kubectl wait deployment -n krateo-system crossplane --for condition=Available=True --timeout=90s
+          kubectl wait deployment -n krateo-system crossplane-rbac-manager --for condition=Available=True --timeout=90s
       - name: Install provider-kubernetes
         run: |
           cat <<EOF | kubectl apply -f -
@@ -46,3 +50,13 @@ jobs:
           EOF
       - name: Check package readiness
         run: kubectl get pkg
+      - name: Install krateo-module-core with dummy domain
+        run: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: pkg.crossplane.io/v1
+          kind: Provider
+          metadata:
+            name: provider-helm
+          spec:
+            package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.13.0
+          EOF
