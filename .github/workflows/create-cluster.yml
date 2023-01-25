@@ -16,3 +16,11 @@ jobs:
         run: sudo install -o root -g root -m 0755 clusterctl /usr/local/bin/clusterctl
       - name: clustectl version
         run: clusterctl version
+      - name: Initialization for AWS provider
+        run: curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/v2.0.2/clusterawsadm-linux-amd64 -o clusterawsadm
+      - name: Make it executable
+        run: chmod +x clusterawsadm
+      - name: Move the binary to a directory present in your PATH
+        run: sudo mv clusterawsadm /usr/local/bin
+      - name: Check version to confirm installation
+        run: clusterawsadm version
