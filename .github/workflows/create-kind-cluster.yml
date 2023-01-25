@@ -102,3 +102,6 @@ jobs:
       - name: Get managed
         if: always()
         run: kubectl get managed
+      - name: Kubectl get pkg
+        if: always()
+        run: kubectl get pkg
