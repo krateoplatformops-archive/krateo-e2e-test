@@ -29,4 +29,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ vars.AWS_REGION }}
-        run: echo $AWS_REGION
+        run: clusterawsadm bootstrap iam create-cloudformation-stack
+      - name: Create the base64 encoded credentials using clusterawsadm
+        run: export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
+      - name: Finally, initialize the management cluster
+        run: clusterctl init --infrastructure aws
