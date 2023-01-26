@@ -60,6 +60,19 @@ jobs:
         run: |
           SA=$(kubectl -n krateo-system get sa -o name | grep provider-helm | sed -e 's|serviceaccount\/|krateo-system:|g')
           kubectl create clusterrolebinding provider-helm-admin-binding --clusterrole cluster-admin --serviceaccount="${SA}"
+      - name: Install provider-argocd-endpoint
+        run: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: pkg.crossplane.io/v1
+          kind: Provider
+          metadata:
+            name: provider-argocd-endpoint
+          spec:
+            package: 'ghcr.io/krateoplatformops/provider-argocd-endpoint:v1.0.0'
+            packagePullPolicy: IfNotPresent
+          EOF
+      - name: Check provider-argocd-endpoint Healthy condition
+        run: kubectl wait provider.pkg.crossplane.io provider-argocd-endpoint --for condition=Healthy=True --timeout=90s
       - name: Install krateo-module-core configuration
         run: |
           cat <<EOF | kubectl apply -f -
