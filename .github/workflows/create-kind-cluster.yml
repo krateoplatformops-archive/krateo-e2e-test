@@ -130,3 +130,6 @@ jobs:
       - name: Kubectl get argo-cd.core.modules.krateo.io/core-argocd
         if: always()
         run: kubectl get argo-cd.core.modules.krateo.io/core-argocd -o yaml
+      - name: Kubectl get endpoint.argocd.krateo.io/core-argocd-argocd-endpoint
+        if: always()
+        run: kubectl get endpoint.argocd.krateo.io/core-argocd-argocd-endpoint -o yaml
