@@ -98,7 +98,7 @@ jobs:
             protocol: https
           EOF
       - name: Check krateo-module-core Ready condition
-        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=300s
+        run: kubectl wait core.modules.krateo.io core --for condition=Ready=True --timeout=600s
       - name: Get all pods
         if: always()
         run: kubectl get pods -A
