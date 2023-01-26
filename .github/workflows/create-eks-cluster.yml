@@ -35,7 +35,7 @@ jobs:
           clusterctl init --infrastructure aws
       - name: Generating the cluster configuration
         run: |
-          clusterctl generate cluster capi-quickstart --flavor development \
+          clusterctl generate cluster capi-quickstart \
           --kubernetes-version v1.26.0 \
           --control-plane-machine-count=3 \
           --worker-machine-count=3 \
