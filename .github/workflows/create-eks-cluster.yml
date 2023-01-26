@@ -34,6 +34,11 @@ jobs:
           export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
           clusterctl init --infrastructure aws
       - name: Generating the cluster configuration
+        env:
+          AWS_CONTROL_PLANE_MACHINE_TYPE: ${{ vars.AWS_CONTROL_PLANE_MACHINE_TYPE }}
+          AWS_NODE_MACHINE_TYPE: ${{ vars.AWS_NODE_MACHINE_TYPE }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_SSH_KEY_NAME: ${{ secrets.AWS_SSH_KEY_NAME }}
         run: |
           clusterctl generate cluster capi-quickstart \
           --kubernetes-version v1.26.0 \
