@@ -31,5 +31,5 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
         run: |
           clusterawsadm bootstrap iam create-cloudformation-stack
-          export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)"
+          export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
           clusterctl init --infrastructure aws
