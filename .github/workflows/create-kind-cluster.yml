@@ -114,3 +114,6 @@ jobs:
       - name: Kubectl get composite
         if: always()
         run: kubectl get composite
+      - name: Kubectl get argo-cd.core.modules.krateo.io/core-argocd
+        if: always()
+        run: kubectl get argo-cd.core.modules.krateo.io/core-argocd -o yaml
