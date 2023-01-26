@@ -24,17 +24,12 @@ jobs:
         run: sudo mv clusterawsadm /usr/local/bin
       - name: Check version to confirm installation
         run: clusterawsadm version
-      - name: Create a CloudFormation stack in AWS account
+      - name: Initialize the management cluster
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ vars.AWS_REGION }}
-        run: clusterawsadm bootstrap iam create-cloudformation-stack
-      - name: Create the base64 encoded credentials using clusterawsadm
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-        run: echo "AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)" >> $AWS_B64ENCODED_CREDENTIALS
-      - name: Finally, initialize the management cluster
-        run: clusterctl init --infrastructure aws
+        run: |
+          clusterawsadm bootstrap iam create-cloudformation-stack
+          export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)"
+          clusterctl init --infrastructure aws
