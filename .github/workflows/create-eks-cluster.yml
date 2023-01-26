@@ -33,3 +33,10 @@ jobs:
           clusterawsadm bootstrap iam create-cloudformation-stack
           export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
           clusterctl init --infrastructure aws
+      - name: Generating the cluster configuration
+        run: |
+          clusterctl generate cluster capi-quickstart --flavor development \
+          --kubernetes-version v1.26.0 \
+          --control-plane-machine-count=3 \
+          --worker-machine-count=3 \
+          > capi-quickstart.yaml
