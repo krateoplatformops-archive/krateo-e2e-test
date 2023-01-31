@@ -55,5 +55,5 @@ jobs:
           > capi-quickstart.yaml
       - name: Creating the workload cluster
         run: kubectl apply -f capi-quickstart.yaml
-      - name: Checkin if workload cluster is provisioned
-        run: kubectl get cluster capi-quickstart -o yaml
+      - name: Wait for workload cluster to be provisioned
+        run: kubectl wait cluster capi-quickstart --for condition=Ready=True --timeout=600s
