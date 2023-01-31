@@ -45,5 +45,7 @@ jobs:
           --control-plane-machine-count=3 \
           --worker-machine-count=3 \
           > capi-quickstart.yaml
+      - name: Kubectl get pods -A
+        run: kubectl get pods -A
       - name: Accessing the workload cluster
         run: kubectl apply -f capi-quickstart.yaml
