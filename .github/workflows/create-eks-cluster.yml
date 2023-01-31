@@ -50,11 +50,30 @@ jobs:
         run: |
           clusterctl generate cluster capi-quickstart \
           --kubernetes-version v1.26.0 \
-          --control-plane-machine-count=3 \
-          --worker-machine-count=3 \
+          --control-plane-machine-count=1 \
+          --worker-machine-count=1 \
           > capi-quickstart.yaml
       - name: Creating workload cluster
         run: kubectl apply -f capi-quickstart.yaml
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: kubectl get AWSCluster/capi-quickstart -o yaml
+        run: kubectl get AWSCluster/capi-quickstart -o yaml
+      - name: kubectl get AWSCluster/capi-quickstart -o yaml
+        if: always()
+        run: kubectl delete cluster capi-quickstart
       - name: Describe workload cluster
         run: clusterctl describe cluster capi-quickstart
       - name: Wait for 2 minutes
