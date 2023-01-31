@@ -33,6 +33,14 @@ jobs:
           clusterawsadm bootstrap iam create-cloudformation-stack
           export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
           clusterctl init --infrastructure aws
+      - name: kubectl wait deployment -n capa-system capa-controller-manager
+        run: kubectl wait deployment -n capa-system capa-controller-manager --for condition=Available=True --timeout=90s
+      - name: kubectl wait deployment -n capi-kubeadm-bootstrap-system capi-kubeadm-bootstrap-controller-manager
+        run: kubectl wait deployment -n capi-kubeadm-bootstrap-system capi-kubeadm-bootstrap-controller-manager --for condition=Available=True --timeout=90s
+      - name: kubectl wait deployment -n capi-kubeadm-control-plane-system capi-kubeadm-control-plane-controller-manager
+        run: kubectl wait deployment -n capi-kubeadm-control-plane-system capi-kubeadm-control-plane-controller-manager --for condition=Available=True --timeout=90s
+      - name: kubectl wait deployment -n capi-system capi-controller-manager
+        run: kubectl wait deployment -n capi-system capi-controller-manager --for condition=Available=True --timeout=90s
       - name: Generating the cluster configuration
         env:
           AWS_CONTROL_PLANE_MACHINE_TYPE: ${{ vars.AWS_CONTROL_PLANE_MACHINE_TYPE }}
@@ -45,7 +53,5 @@ jobs:
           --control-plane-machine-count=3 \
           --worker-machine-count=3 \
           > capi-quickstart.yaml
-      - name: Kubectl get deployments -A
-        run: kubectl get deployments -A
       - name: Accessing the workload cluster
         run: kubectl apply -f capi-quickstart.yaml
