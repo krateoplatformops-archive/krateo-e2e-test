@@ -53,5 +53,7 @@ jobs:
           --control-plane-machine-count=3 \
           --worker-machine-count=3 \
           > capi-quickstart.yaml
-      - name: Accessing the workload cluster
+      - name: Creating the workload cluster
         run: kubectl apply -f capi-quickstart.yaml
+      - name: Checkin if workload cluster is provisioned
+        run: kubectl get cluster capi-quickstart -o yaml
