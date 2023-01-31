@@ -50,7 +50,8 @@ jobs:
         run: |
           clusterctl generate cluster capi-quickstart \
           --kubernetes-version v1.26.0 \
-          --control-plane-machine-count=1 \
+          --flavor=eks \
+#          --control-plane-machine-count=1 \
           --worker-machine-count=1 \
           > capi-quickstart.yaml
       - name: Creating workload cluster
@@ -101,6 +102,8 @@ jobs:
         run: clusterctl describe cluster capi-quickstart
       - name: kubectl get AWSCluster/capi-quickstart -o yaml
         run: kubectl get AWSCluster/capi-quickstart -o yaml
+      - name: kubectl get KubeadmControlPlane/capi-quickstart-control-plane -o yaml
+        run: kubectl get KubeadmControlPlane/capi-quickstart-control-plane -o yaml
       - name: kubectl delete cluster capi-quickstart
         if: always()
         run: kubectl delete cluster capi-quickstart
