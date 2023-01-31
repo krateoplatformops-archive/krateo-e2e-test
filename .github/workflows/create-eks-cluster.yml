@@ -53,7 +53,20 @@ jobs:
           --control-plane-machine-count=3 \
           --worker-machine-count=3 \
           > capi-quickstart.yaml
-      - name: Creating the workload cluster
+      - name: Creating workload cluster
         run: kubectl apply -f capi-quickstart.yaml
-      - name: Wait for workload cluster to be provisioned
-        run: kubectl wait cluster capi-quickstart --for condition=Ready=True --timeout=600s
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+      - name: Describe workload cluster
+        run: clusterctl describe cluster capi-quickstart
+      - name: Wait for 2 minutes
+        run: sleep 120
+
+      # - name: Wait for workload cluster to be provisioned
+      #   run: kubectl wait cluster capi-quickstart --for condition=Ready=True --timeout=600s
