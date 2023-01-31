@@ -47,13 +47,7 @@ jobs:
           AWS_NODE_MACHINE_TYPE: ${{ vars.AWS_NODE_MACHINE_TYPE }}
           AWS_REGION: ${{ vars.AWS_REGION }}
           AWS_SSH_KEY_NAME: ${{ secrets.AWS_SSH_KEY_NAME }}
-        run: |
-          clusterctl generate cluster capi-quickstart \
-          --kubernetes-version v1.26.0 \
-          --flavor=eks \
-#          --control-plane-machine-count=1 \
-          --worker-machine-count=1 \
-          > capi-quickstart.yaml
+        run: clusterctl generate cluster capi-quickstart --flavor=eks --kubernetes-version v1.26.0 --worker-machine-count=1 > capi-quickstart.yaml
       - name: Creating workload cluster
         run: kubectl apply -f capi-quickstart.yaml
       # - name: Wait for workload cluster to be provisioned
