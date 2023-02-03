@@ -37,3 +37,5 @@ jobs:
         run: chmod +x ./installation_directory
       - name: ls -la
         run: ls -la
+      - name: Initialize the cluster deployment
+        run: openshift-install create cluster --dir ./installation_directory --log-level=info
