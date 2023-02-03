@@ -2,6 +2,7 @@ name: Create OKD Cluster
 
 on: push
 
+
 jobs:
   create-cluster:
     runs-on: ubuntu-latest
