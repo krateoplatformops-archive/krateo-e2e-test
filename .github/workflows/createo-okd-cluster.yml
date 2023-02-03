@@ -12,9 +12,9 @@ jobs:
       - name: Kubectl describe nodes
         run: kubectl describe nodes
       - name: Download OC client
-        run: curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux-4.12.0.tar.gz
-      # - name: tar xvzf openshift-client-linux-4.12.0.tar.gz
-      #   run: tar xvzf openshift-client-linux-4.12.0.tar.gz
+        run: curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux-4.12.0.tar.gz  -o openshift-client-linux.tar.gz
+      - name: tar xvzf openshift-client-linux.tar.gz
+        run: tar xvzf openshift-client-linux.tar.gz
       - name: ls -la
         run: ls -la
 
