@@ -1,6 +1,6 @@
 name: Create OKD Cluster
 
-on: workload_dispatcher
+on: push
 
 jobs:
   create-cluster:
@@ -11,4 +11,13 @@ jobs:
       - name: Kubectl describe nodes
         run: kubectl describe nodes
       - name: Download OC client
-        run: kubectl create namespace crossplane-system
+        run: curl -L https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux-4.12.0.tar.gz
+      - name: tar xvzf openshift-client-linux-4.12.0.tar.gz
+        run: tar xvzf openshift-client-linux-4.12.0.tar.gz
+      - name: ls -la
+        run: ls -la
+
+      # - name: Make it executable
+      #   run: chmod +x clusterawsadm
+      # - name: Move the binary to a directory present in your PATH
+      #   run: sudo mv clusterawsadm /usr/local/bin
