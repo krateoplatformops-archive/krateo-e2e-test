@@ -23,3 +23,7 @@ jobs:
         run: oc adm release extract --tools quay.io/openshift/okd:4.12.0-0.okd-2023-01-21-055900
       - name: ls -la
         run: ls -la
+      - name: tar xvzf openshift-install-linux-4.12.0-0.okd-2023-01-21-055900.tar.gz
+        run: tar xvzf openshift-install-linux-4.12.0-0.okd-2023-01-21-055900.tar.gz
+      - name: ls -la
+        run: ls -la      
