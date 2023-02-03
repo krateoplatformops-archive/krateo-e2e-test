@@ -17,8 +17,7 @@ jobs:
         run: tar xvzf openshift-client-linux.tar.gz
       - name: ls -la
         run: ls -la
-
-      # - name: Make it executable
-      #   run: chmod +x clusterawsadm
-      # - name: Move the binary to a directory present in your PATH
-      #   run: sudo mv clusterawsadm /usr/local/bin
+      - name: Move the binary to a directory present in your PATH
+        run: sudo mv oc /usr/local/bin
+      - name: Download and extract the openshift installer
+        run: oc adm release extract --tools quay.io/openshift/okd:4.12.0-0.okd-2023-01-21-055900
